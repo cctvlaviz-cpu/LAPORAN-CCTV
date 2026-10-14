@@ -3,105 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Monitoring CCTV & Kamera Perusahaan</title>
+    <title>Dashboard Monitoring CCTV & Laporan Otomatis</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f4f6f9; color: #333; }
         .header { background: linear-gradient(135deg, #0056b3, #003366); color: white; padding: 30px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .header h1 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+        .header h1 { margin: 0; font-size: 26px; font-weight: 700; }
         .header p { margin: 5px 0 0 0; opacity: 0.9; font-size: 14px; }
         
-        .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
-        
-        /* Grid Sistem */
+        .container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
         .dashboard-grid { display: grid; grid-template-columns: 2.2fr 1fr; gap: 25px; }
         @media (max-width: 950px) { .dashboard-grid { grid-template-columns: 1fr; } }
         
         .card { background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 25px; margin-bottom: 25px; border-top: 4px solid #0056b3; }
-        .card-title { font-size: 18px; font-weight: 600; color: #003366; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .card-title { font-size: 18px; font-weight: 600; color: #003366; margin-top: 0; margin-bottom: 15px; }
         
-        /* Ringkasan Status */
         .status-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
         .status-box { padding: 15px; border-radius: 6px; text-align: center; color: white; font-weight: bold; font-size: 15px; }
         .status-box.normal { background-color: #28a745; }
         .status-box.warning { background-color: #ffc107; color: #333; }
         .status-box.danger { background-color: #dc3545; }
         
-        /* Fitur Filter & Kontrol */
-        .filter-section { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
-        .filter-select { padding: 10px 15px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; outline: none; background: white; min-width: 160px; cursor: pointer; }
-        .filter-select:focus { border-color: #0056b3; }
-        .lbl-filter { font-weight: bold; color: #495057; }
+        .filter-section { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8; }
+        .filter-select { padding: 10px 15px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; background: white; min-width: 280px; cursor: pointer; font-weight: bold; color: #003366; }
         
         iframe { border: 1px solid #e1e4e8; border-radius: 6px; background: #fafafa; width: 100%; }
-        
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; border-radius: 6px; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        
-        .info-text { background: #e8f4fd; border-left: 4px solid #0076d6; padding: 12px; border-radius: 4px; font-size: 13px; color: #004072; margin-bottom: 15px; }
+        .info-text { background: #e8f4fd; border-left: 4px solid #0076d6; padding: 12px; border-radius: 4px; font-size: 13px; color: #004072; margin-top: 15px; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1>📊 DATA LIVE MONITORING & KONDISI KAMERA</h1>
-        <p>Laporan Pemeriksaan Berkala & Lampiran Arsip Rekaman Rekapitulasi Mingguan</p>
+        <p>Dashboard Laporan Harian Internal Korporat Berbasis Arsip Digital</p>
     </div>
 
     <div class="container">
         
-        <!-- BAGIAN 1: RINGKASAN & KONTROL FILTER (Nilai Plus Otomatis) -->
         <div class="card">
-            <h3 class="card-title">🛡️ Ringkasan Status & Navigasi Jadwal</h3>
+            <h3 class="card-title">📅 Kalender Log Sistem Laporan Perusahaan</h3>
             
-            <div class="status-container">
-                <!-- Sesuai dengan data Anda: Ada Normal (Buram) dan Normal (Noise) -->
-                <div class="status-box normal">🎥 Kamera Normal (Aktif): 19</div>
-                <div class="status-box warning">⚠️ Normal (Buram/Noise): 3</div>
-                <div class="status-box danger">❌ Kamera Rusak/Mati: 0</div>
+            <!-- DROPDOWN YANG AKAN TERISI TANGGAL OTOMATIS OLEH JAVASCRIPT -->
+            <div class="filter-section">
+                <span style="font-weight: bold; color: #495057;">🔍 Pilih Tanggal Laporan:</span>
+                <select class="filter-select" id="dropdownTanggal" onchange="sinkronisasiDataLaporan()">
+                    <!-- Data tanggal akan digenerate otomatis di sini -->
+                </select>
             </div>
 
-            <!-- FITUR UTAMA FILTER JADWAL BERDASARKAN HARI -->
-            <div class="filter-section">
-                <span class="lbl-filter">📅 Pilih Hari Penjadwalan:</span>
-                <select class="filter-select" id="pilihHari" onchange="gantiJadwalHari()">
-                    <option value="semua">Tampilkan Semua Hari</option>
-                    <option value="senin">Senin (12/10/2026)</option>
-                    <option value="selasa">Selasa (13/10/2026)</option>
-                    <option value="rabu">Rabu (14/10/2026)</option>
-                    <option value="kamis">Kamis (15/10/2026)</option>
-                    <option value="jumat">Jumat (16/10/2026)</option>
-                </select>
-                <span style="font-size: 13px; color: #666;">*(Gunakan filter untuk menyortir lembar Excel di bawah)</span>
+            <div class="status-container">
+                <div class="status-box normal">🎥 Kamera Normal</div>
+                <div class="status-box warning">⚠️ Perlu Pengecekan / Buram</div>
+                <div class="status-box danger">❌ Kamera Rusak/Mati: 0</div>
             </div>
             
             <div class="info-text">
-                💡 <strong>Tips Efisiensi Kerja:</strong> Seluruh tabulasi data di bawah disinkronisasikan langsung melalui sistem cloud Google. Anda cukup memperbarui file Excel harian, dan sistem web mini ini akan membaca pembaruan tersebut secara instan.
+                🚀 <strong>Sistem Otomasi Penuh Aktif:</strong> Pilihan tanggal di atas diperbarui secara otomatis mengikuti kalender real-time tanpa modifikasi kode manual. Riwayat data paten terkunci berdasarkan kecocokan hari dalam siklus mingguan.
             </div>
         </div>
 
-        <!-- BAGIAN 2: GRID KONTEN UTAMA -->
         <div class="dashboard-grid">
             
-            <!-- SEBELAH KIRI: DATA TABEL LAPORAN EXCEL -->
+            <!-- SEBELAH KIRI: EXCEL GOOGLE SHEETS -->
             <div class="main-content">
                 <div class="card">
-                    <h3 class="card-title">📅 Tabel Jadwal & Detail Kondisi Kamera (Excel Live)</h3>
+                    <h3 class="card-title">📋 Detail Kondisi Fisik Kamera Terpilih</h3>
                     <div style="overflow-x:auto;">
-                        <!-- LINK EMBED GOOGLE SHEETS ASLI MILIK ANDA -->
-                        <iframe id="frameExcel" src="https://google.com" height="650"></iframe>
+                        <iframe id="frameExcel" src="" height="650"></iframe>
                     </div>
                 </div>
             </div>
             
-            <!-- SEBELAH KANAN: LAMPIRAN VIDEO REKAMAN -->
+            <!-- SEBELAH KANAN: VIDEO REKAMAN GOOGLE DRIVE -->
             <div class="sidebar">
                 <div class="card">
-                    <h3 class="card-title">📹 Lampiran Video Rekaman CCTV</h3>
-                    <p style="font-size: 13px; color: #666; margin-top: -10px;">Arsip otomatis diperbarui berkala setiap 2 minggu.</p>
-                    
+                    <h3 class="card-title">📹 File Rekaman CCTV Tanggal Terpilih</h3>
                     <div class="video-wrapper">
-                        <!-- MASUKKAN LINK EMBED GOOGLE DRIVE VIDEO ANDA DI BAWAH INI -->
-                        <iframe src="https://google.com" allowfullscreen></iframe>
+                        <iframe id="frameVideo" src="" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -110,24 +89,67 @@
     </div>
 
     <script>
-        // Logika Pintar untuk mengarahkan atasan ke lembar/tab hari tertentu di Excel jika dibutuhkan pengembangan lanjut
-        function gantiJadwalHari() {
-            const hari = document.getElementById("pilihHari").value;
-            const frame = document.getElementById("frameExcel");
+        // 1. Tautan Utama Google Sheets Anda yang sudah dipublikasikan ke web
+        const BASE_EXCEL_URL = "https://google.com";
+
+        // =======================================================================
+        // 2. PEMETAAN DATA PATEN: Daftarkan nomor GID Tab Excel & ID Video Drive berdasarkan HARI
+        // =======================================================================
+        const MAPPING_SIKLUS_HARI = {
+            1: { namaHari: "Senin",  gidExcel: "0",        idVideoDrive: "ID_VIDEO_DRIVE_SENIN" },
+            2: { namaHari: "Selasa", gidExcel: "11111111", idVideoDrive: "ID_VIDEO_DRIVE_SELASA" },
+            3: { namaHari: "Rabu",   gidExcel: "22222222", idVideoDrive: "ID_VIDEO_DRIVE_RABU" },
+            4: { namaHari: "Kamis",  gidExcel: "33333333", idVideoDrive: "ID_VIDEO_DRIVE_KAMIS" },
+            5: { namaHari: "Jumat",  gidExcel: "44444444", idVideoDrive: "ID_VIDEO_DRIVE_JUMAT" },
+            6: { namaHari: "Sabtu",  gidExcel: "55555555", idVideoDrive: "ID_VIDEO_DRIVE_SABTU" },
+            0: { namaHari: "Minggu", gidExcel: "66666666", idVideoDrive: "ID_VIDEO_DRIVE_MINGGU" }
+        };
+
+        // Fungsi Otomatis untuk Membuat Dropdown Tanggal Dinamis (7 Hari Terakhir)
+        function buatDropdownTanggalOtomatis() {
+            const dropdown = document.getElementById("dropdownTanggal");
+            const bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
             
-            // Tautan dasar Google Sheets Anda
-            let baseUrl = "https://google.com";
-            
-            // Catatan Pengembang: Jika Anda membuat tab terpisah per hari (misal Tab Senin, Tab Selasa) di Google Sheets, 
-            // Anda bisa menambahkan kode ID tab (&gid=xxx) di bawah ini agar halaman web bergeser otomatis saat diklik.
-            if(hari === "senin") {
-                frame.src = baseUrl; // Arahkan ke tab senin
-            } else if(hari === "selasa") {
-                frame.src = baseUrl; // Arahkan ke tab selasa
-            } else {
-                frame.src = baseUrl;
+            // Loop untuk memproduksi 7 hari ke belakang dimulai dari hari ini
+            for (let i = 0; i < 7; i++) {
+                let d = new Date();
+                d.setDate(d.getDate() - i); // Kurangi tanggal untuk melacak ke belakang
+                
+                let indexHari = d.getDay(); // 0 = Minggu, 1 = Senin, dst
+                let namaHari = MAPPING_SIKLUS_HARI[indexHari].namaHari;
+                let tanggal = d.getDate();
+                let bulan = bulanIndo[d.getMonth()];
+                let tahun = d.getFullYear();
+                
+                // Membuat elemen opsi pilihan dropdown
+                let option = document.createElement("option");
+                option.value = indexHari; // Menyimpan index hari sebagai acuan database
+                option.text = `${namaHari}, ${tanggal} ${bulan} ${tahun} ${i === 0 ? '(Hari Ini)' : ''}`;
+                
+                dropdown.appendChild(option);
             }
+            
+            // Jalankan sinkronisasi data pertama kali untuk hari ini
+            sinkronisasiDataLaporan();
         }
+
+        // Fungsi mencocokkan tanggal terpilih dengan data paten Excel & Video
+        function sinkronisasiDataLaporan() {
+            const indexHariTerpilih = document.getElementById("dropdownTanggal").value;
+            const dataPaten = MAPPING_SIKLUS_HARI[indexHariTerpilih];
+            
+            const frameExcel = document.getElementById("frameExcel");
+            const frameVideo = document.getElementById("frameVideo");
+            
+            // Tampilkan Tab Excel sesuai GID hari tersebut
+            frameExcel.src = BASE_EXCEL_URL + "&gid=" + dataPaten.gidExcel;
+            
+            // Putar video Drive yang paten sesuai hari tersebut
+            frameVideo.src = "https://google.com" + dataPaten.idVideoDrive + "/preview";
+        }
+
+        // Jalankan fungsi otomatis saat halaman dimuat
+        window.onload = buatDropdownTanggalOtomatis;
     </script>
 
 </body>
