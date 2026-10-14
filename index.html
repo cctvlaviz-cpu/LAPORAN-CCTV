@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Cek Rekaman & CCTV</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f0f2f5; color: #333; }
+        .container { max-width: 1000px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h1 { color: #0056b3; border-bottom: 3px solid #0056b3; padding-bottom: 10px; margin-top: 0; }
+        .box { background: #f8f9fa; padding: 20px; margin-bottom: 25px; border-left: 5px solid #0056b3; border-radius: 4px; }
+        iframe { border: 1px solid #ddd; border-radius: 4px; background: #fafafa; }
+        .video-box { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; margin-top: 15px; }
+        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        h3 { color: #495057; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dashboard Jadwal Cek Rekaman & Laporan Mingguan</h1>
+    <p>Halaman monitoring berkala untuk data tabulasi aktivitas pemeriksaan dan pemantauan CCTV.</p>
+
+    <div class="box">
+        <h2>Data Live Monitoring</h2>
+        
+        <!-- DATA TABEL EXCEL / GOOGLE SHEETS -->
+        <h3>Jadwal Cek Rekaman (Excel):</h3>
+        <div style="overflow-x:auto;">
+            <iframe src="https://google.com" width="100%" height="500"></iframe>
+        </div>
+
+        <!-- REKAMAN CCTV MINGGUAN -->
+        <h3>Lampiran Rekaman CCTV (Otomatis Terhapus Setiap 2 Minggu):</h3>
+        <div class="video-box">
+            <!-- GANTI LINK DI BAWAH JIKA SUDAH ADA LINK VIDEO BARU -->
+            <iframe src="https://youtube.com" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
